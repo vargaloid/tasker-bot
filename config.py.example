@@ -1,0 +1,10 @@
+bot_version = "0.0.0"
+debug_mode = False
+
+### MySQL connections ###
+database = ''
+username = ''
+password = ''
+host = ''
+port = ''
+### MySQL connections ###

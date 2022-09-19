@@ -1,0 +1,16 @@
+[Unit]
+Description=Telegram Tasker bot
+After=syslog.target
+After=network.target
+
+[Service]
+Environment=BOT_TOKEN=''
+Type=simple
+User=root
+WorkingDirectory=/var/www/tasker-bot
+ExecStart=/usr/bin/python3 /var/www/tasker-bot/main.py
+RestartSec=10
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
