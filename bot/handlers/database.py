@@ -34,6 +34,7 @@ def add_user(message):
     else:
         logger.info(f'Database User - User with telegram ID <{message.forward_from.id}> is in DB. Activating..')
         status = activate_user(user), True
+    mysql_db.close()
     return status
 
 
@@ -43,6 +44,7 @@ def del_user(telegram_id):
         user_id.is_active = False
         user_id.save()
         logger.info(f'Database User - User with telegram ID <{telegram_id}> deactivated')
+    mysql_db.close()
     return user_id
 
 
@@ -50,6 +52,7 @@ def activate_user(user):
     user.is_active = True
     user.save()
     logger.info(f'Database User - User with DB ID <{user}> activated')
+    mysql_db.close()
     return user
 
 
@@ -60,6 +63,7 @@ def get_user_from_telegram_id(telegram_id):
     except DoesNotExist:
         user = None
         logger.info(f'Database User - There is no user with telegram ID <{telegram_id}> in DB')
+    mysql_db.close()
     return user
 
 
@@ -70,6 +74,7 @@ def get_user(user_id):
     except DoesNotExist:
         user = None
         logger.info(f'Database User - There is no user with ID <{user_id}> in DB')
+    mysql_db.close()
     return user
 
 
@@ -81,6 +86,7 @@ def get_users():
     """
     query = User.select().where(User.is_active == True)
     logger.info('Database User - Getting all active users from DB')
+    mysql_db.close()
     return query
 
 
@@ -96,6 +102,7 @@ def get_user_telegram_ids():
         telegram_id = user.telegram_id
         telegram_ids_list.append(telegram_id)
     logger.info(f'Database User - All active users <{telegram_ids_list}>')
+    mysql_db.close()
     return telegram_ids_list
 
 
@@ -113,6 +120,7 @@ def add_task(task_data):
         logger.info(f'Database Task - New task <{status}> added to DB.')
     else:
         logger.info(f'Database Task - New task error <{status}>')
+    mysql_db.close()
     return status
 
 
@@ -122,12 +130,14 @@ def get_tasks(telegram_user_id):
                 .where(Task.assigned_to_id == user_id,
                        Task.is_active == True)
     logger.info('Database Task - Getting all active tasks from DB')
+    mysql_db.close()
     return query
 
 
 def get_task(task_id):
     task = Task.get(Task.id == task_id)
     logger.info(f'Database User - Get task with ID <{task_id}> from DB')
+    mysql_db.close()
     return task
 
 
@@ -143,4 +153,5 @@ def close_task(task_id):
         task.closed_at = datetime.datetime.now()
         task.save()
         logger.info(f'Database Task - Task <{task}> closed.')
+    mysql_db.close()
     return task
