@@ -1,7 +1,7 @@
 from loguru import logger
 from aiogram import types, Dispatcher
 
-from config import bot_version, debug_mode
+from config import debug_mode
 from bot.keyboards.inline import inline_kb_users
 from bot.handlers.users import UserManagement
 from bot.handlers.tasks import TaskManagement
@@ -17,7 +17,7 @@ async def cmd_start(message: types.Message):
 
 async def cmd_version(message: types.Message):
     logger.info(f'Command: <version> - {message.from_user.username}:{message.from_user.id}')
-    await message.answer(f"Bot version: <b>{bot_version}</b>")
+    await message.answer("Bot version: <b>0.1.2</b>")
 
 
 async def cmd_id(message: types.Message):
