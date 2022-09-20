@@ -13,6 +13,7 @@ mysql_db = MySQLDatabase(database,
 class BaseModel(Model):
     class Meta:
         database = mysql_db
+        table_settings = ['ENGINE=InnoDB', 'DEFAULT CHARSET=utf8']
 
 
 class User(BaseModel):
