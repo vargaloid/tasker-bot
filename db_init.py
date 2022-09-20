@@ -1,5 +1,4 @@
 import datetime
-import pymysql
 
 from peewee import *
 
